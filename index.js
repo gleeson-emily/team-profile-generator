@@ -1,11 +1,10 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const { listenerCount } = require('events');
 const employeeList = []
 
 const questions = [{
     type: "list",
-    name: "position",
+    name: "role",
     message: "Which employee would you like to add?",
     choices: 
         () => {
@@ -49,7 +48,7 @@ const questions = [{
        if (idInput === employeeList.some(employee => employee.id)) {
            console.log("Please enter a different ID number.")
            return false;
-       } else if (idInput = NaN) {
+       } else if (idInput == NaN) {
            console.log("Please enter a number.")
            return false;
        } else {
@@ -106,10 +105,51 @@ const questions = [{
                 return true
             } else {
                 console.log("Please enter a GitHub username.")
+                return false
             }
         }
     },
-{
+    {
+        type: "input",
+        name: "school",
+        message: "What school does the intern attend?",
+        when: ({role}) => {
+            if (role === "Intern") {
+                return true
+            } else {
+                return false
+            }
+        },
+        validate: schoolInput => {
+            if (schoolInput) {
+                return true
+            } else {
+                return false
+            }
+        }
 },
-
+    {
+        type: "confirm",
+        name: "addMore",
+        message: "Would you like to add another employee?",
+        default: true
+    }
 ]
+
+
+const userQuestions = () => {
+     inquirer.prompt(questions)
+        .then(answers => {
+            employeeList.push(answers);
+            console.log(employeeList)
+            
+            if (questions.addMore = true) {
+                return userQuestions(); 
+            } else {
+                return employeeList
+            };
+        });
+    };
+
+
+userQuestions();
