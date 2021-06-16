@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
+const codeTemplate = require('./src/codetemplate.js')
 const employeeList = []
 
 const questions = [{
@@ -142,11 +143,11 @@ const userQuestions = () => {
         .then(answers => {
             employeeList.push(answers);
             console.log(employeeList)
-            
+
             if (questions.addMore = true) {
                 return userQuestions(); 
             } else {
-                return employeeList
+                return employeeList;
             };
         });
     };
