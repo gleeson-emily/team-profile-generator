@@ -6,6 +6,9 @@ class Engineer extends Employee {
     this.role = "Engineer"
     this.github = github;
     }
+getRole() {
+        return `${this.role}`
+    }
 getGithub() {
     return `${this.github}`
 }

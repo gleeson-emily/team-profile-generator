@@ -14,9 +14,6 @@ getId(enterId) {
     if (enterId = "") {
         console.log("Please enter an ID number.")
         return;
-    } else if (enterId != "0123456789") {
-        console.log("Please enter a number.")
-        return;
     } else {
         enterId = this.id;
         return `${this.id}`;
