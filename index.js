@@ -3,10 +3,13 @@ const fs = require('fs');
 const codeTemplate = require('./src/codetemplate.js')
 const employeeList = []
 
-const questions = [{
+
+
+const questions = [
+    {
     type: "list",
     name: "role",
-    message: "Which employee would you like to add?",
+    message: "Welcome to the Team Profile Generator! Which employee would you like to add?",
     choices: 
         () => {
         if(employeeList.some(employee => employee.role === "Manager")) {
@@ -49,7 +52,7 @@ const questions = [{
        if (idInput === employeeList.some(employee => employee.id)) {
            console.log("Please enter a different ID number.")
            return false;
-       } else if (idInput == NaN) {
+       } else if (idInput.includes(NaN)) {
            console.log("Please enter a number.")
            return false;
        } else {
@@ -82,7 +85,7 @@ const questions = [{
             }
         },
         validate: officeNumberInput => {
-            if (officeNumberInput == NaN) {
+            if (officeNumberInput.includes(NaN)) {
                 console.log("Please enter a valid number.")
                 return false
             } else {
@@ -125,6 +128,7 @@ const questions = [{
             if (schoolInput) {
                 return true
             } else {
+                console.log("Please enter a school name.")
                 return false
             }
         }
@@ -133,24 +137,64 @@ const questions = [{
         type: "confirm",
         name: "addMore",
         message: "Would you like to add another employee?",
-        default: true
+        default: true,
+        validate: addMoreInput => {
+            if (addMoreInput === false)
+            {
+                return;
+            }
+        }
     }
 ]
 
 
-const userQuestions = () => {
-     inquirer.prompt(questions)
-        .then(answers => {
-            employeeList.push(answers);
-            console.log(employeeList)
 
-            if (questions.addMore = true) {
-                return userQuestions(); 
-            } else {
-                return employeeList;
-            };
-        });
-    };
+
+function writePage(fileName, data) {
+    console.log(data)
+    fs.writeFile(fileName, data, err => {
+    err ? console.log(err) : console.log("Page successfully created!");
+   }
+    )}
+
+
+ function userQuestions() {
+                   inquirer.prompt(questions)
+                    .then((response) => {
+                   employeeList.push(response);
+                   console.log(employeeList)
+                   if (response.addMore === true) {
+                       console.log(response.addMore)
+                       return userQuestions(); 
+                   } else {
+                       console.log(employeeList)
+                        const answers = codeTemplate.codeTemplate(JSON.stringify(employeeList))
+                        console.log(answers)
+                        console.log(`${response.firstName}`);
+                        writePage(`${response.firstName}.html`, answers)
+                   };
+               });
+        };
+
+
 
 
 userQuestions();
+
+
+
+    // .then((response) => {
+    //     const answers = codeTemplate.addEmployeeCards(response)
+    //     writePage(`ourteam.html`, answers)
+    // })
+
+
+    // userQuestions(questions)
+    // .then((response) => {
+    //     const answers = codeTemplate.addEmployeeCard(response);
+    //     writePage(`${response.Manager.firstNameInput}.html`, answers)
+    // });
+
+
+
+ 

@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/gleeson-emily/team-profile-generator#readme",
   "dependencies": {
-    "inquirer": "^8.1.0",
+    "inquirer": "^8.1.1",
     "jest": "^27.0.4"
   }
 }
