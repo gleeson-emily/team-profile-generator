@@ -85,7 +85,7 @@ const questions = [
             }
         },
         validate: officeNumberInput => {
-            if (officeNumberInput.includes(NaN)) {
+            if (officeNumberInput.includes()) {
                 console.log("Please enter a valid number.")
                 return false
             } else {
@@ -168,9 +168,12 @@ function writePage(fileName, data) {
                        return userQuestions(); 
                    } else {
                        console.log(employeeList)
-                        const answers = codeTemplate.codeTemplate(JSON.stringify(employeeList))
-                        console.log(answers)
+                        const answers = codeTemplate.codeTemplate(response)
+                        //console.log(answers)
                         console.log(`${response.firstName}`);
+                        console.log(`${response.idNumber}`)
+                        console.log(`${response.emailAddress}`)
+                        console.log(`${response.officeNumber}`)
                         writePage(`${response.firstName}.html`, answers)
                    };
                });
