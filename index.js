@@ -10,7 +10,7 @@ const questions = [
     {
     type: "list",
     name: "role",
-    message: "Welcome to the Team Profile Generator! Which employee would you like to add?",
+    message: "Which employee would you like to add?",
     choices: 
         () => {
         if(employeeList.some(employee => employee.role === "Manager")) {
@@ -50,14 +50,11 @@ const questions = [
     name: "idNumber",
     message: "What is the employee's ID number?",
     validate: idInput => {
-       if (idInput === employeeList.some(employee => employee.id)) {
-           console.log("Please enter a different ID number.")
-           return false;
-       } else if (idInput.includes(NaN)) {
-           console.log("Please enter a number.")
-           return false;
-       } else {
+      if (!isNaN(parseInt(idInput))) {
            return true;
+       } else {
+           console.log("Please enter a number!")
+           return false;
        }
        }
     },
@@ -86,11 +83,11 @@ const questions = [
             }
         },
         validate: officeNumberInput => {
-            if (officeNumberInput.includes()) {
-                console.log("Please enter a valid number.")
-                return false
+            if (!isNaN(parseInt(officeNumberInput))) {
+                return true;
             } else {
-                return true
+                console.log("Please enter a number!")
+                return false;
             }
         }
     },
@@ -178,24 +175,34 @@ function writePage(fileName, data) {
                             default:
                                 break;
                         }
-
                    if (response.addMore === true) {
-                   
                        userQuestions(); 
                    } else {
-                    
                         const answers = codeTemplate(employeeList)
-                     
-                       
-                        writePage('team.html', answers)
+                        writePage(`${employeeList[0].firstName}-team.html`, answers)
                    };
                });
         };
 
+function startQuestion() {
+    inquirer.prompt([{
+        type: 'confirm',
+        name: 'startQuiz',
+        message: 'Welcome to the Team Profile Generator! Would you like to build a webpage for your team?',
+        default: true,
+    }])
+    .then((response) => {
+        if(response = true){
+            userQuestions();
+        }
+        else {
+            return;
+        }
+    })
+}
 
 
-
-userQuestions();
+startQuestion();
 
 
 
