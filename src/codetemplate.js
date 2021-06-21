@@ -1,89 +1,80 @@
-const Employee = require('../library/employee.js');
-const Manager = require('../library/manager.js');
-const Engineer = require('../library/engineer.js');
-const Intern = require('../library/intern.js');
-let employeeCards = [];
-
-
-function managerCard() {
-  let manager = new Manager(response.firstName, response.lastName, response.idNumber, response.emailAddress, response.role, response.officeNumber);
-  newCard = `
+function managerCard(manager) {
+ 
+  return `
     <div class="container-fluid" id="employee-card">
        <div class="container">
        <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
          <div class="card-header"><h5 class="card-title">${manager.role}</h5></div>
          <div class="card-body">
            <p class="card-text">${manager.firstName} ${manager.lastName}</p>
-           <p class="card-text">ID Number: ${manager.idNumber}</p>
-           <p class="card-text">Email: ${manager.emailAddress}</p>
+           <p class="card-text">ID Number: ${manager.id}</p>
+           <p class="card-text">Email: ${manager.email}</p>
            <p class="card-text">Office Number: ${manager.officeNumber}</p>
          </div>
      </div>
  </div>`
-  console.log(newCard)
-  employeeCards.push(newCard);
+ 
 }
 
-function engineerCard() {
-  info = new Engineer(response.firstName, response.lastName, response.idNumber, response.emailAddress, response.role, response.github);
-  newCard = `
+function engineerCard(engineer) {
+ 
+ return `
      <div class="container-fluid" id="employee-card">
      <div class="container">
      <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
-     <div class="card-header"><h5 class="card-title">${info.role}</h5></div>
+     <div class="card-header"><h5 class="card-title">${engineer.role}</h5></div>
       <div class="card-body">
-          <p class="card-text">${info.firstName} ${info.lastName}</p>
-           <p class="card-text">ID Number: ${info.idNumber}</p>
-            <p class="card-text">Email: ${info.emailAddress}</p>
-            <p class="card-text">GitHub: ${info.github}</p>
+          <p class="card-text">${engineer.firstName} ${engineer.lastName}</p>
+           <p class="card-text">ID Number: ${engineer.id}</p>
+            <p class="card-text">Email: ${engineer.email}</p>
+            <p class="card-text">GitHub: ${engineer.github}</p>
                      </div>
                  </div>
              </div>`
-  console.log(newCard)
-  employeeCards.push(newCard);
+ 
 }
 
-function internCard() {
-  intern = new Intern(response.firstName, response.lastName, response.idNumber, response.emailAddress, response.role, response.school);
-  newCard = `
+function internCard(intern) {
+ 
+  return `
     <div class="container-fluid" id="employee-card">
        <div class="container">
        <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
          <div class="card-header"><h5 class="card-title">${intern.role}</h5></div>
          <div class="card-body">
            <p class="card-text">${intern.firstName} ${intern.lastName}</p>
-           <p class="card-text">ID Number: ${intern.idNumber}</p>
-           <p class="card-text">Email: ${intern.emailAddress}</p>
+           <p class="card-text">ID Number: ${intern.id}</p>
+           <p class="card-text">Email: ${intern.email}</p>
            <p class="card-text">Office Number: ${intern.school}</p>
          </div>
      </div>
  </div>`
-  console.log(newCard)
-  employeeCards.push(newCard);
+
 }
 
 function addEmployeeCard(employeeCards) { 
+  console.log(employeeCards)
   let empCrds = "";
-  employeeCards.forEach (employee => {
+  employeeCards.forEach(employee => {
   switch (employee.getRole()) {
-    case employee.getRole() === "Manager":
+    case "Manager":
       empCrds += managerCard(employee)
       break;
 
-    case employee.getRole() === "Engineer":
+    case "Engineer":
       empCrds += engineerCard(employee)
       break;
 
-    case employee.getRole() === "Intern":
+    case "Intern":
       empCrds += internCard(employee)
       break;
 
     default:
-      info = new Employee(response.firstName, response.lastName, response.idNumber, response.emailAddress, response.role);
+     break;
 
   };
 })
-  return employeeCards;
+  return empCrds;
 };
 
 
@@ -106,4 +97,4 @@ const codeTemplate = employeeCards => {
 }
 
 
-module.exports = { codeTemplate };
+module.exports = codeTemplate;

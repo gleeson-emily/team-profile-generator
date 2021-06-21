@@ -1,9 +1,10 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 const codeTemplate = require('./src/codetemplate.js')
+const Manager = require('./library/manager');
+const Engineer = require('./library/engineer.js');
+const Intern = require('./library/intern.js');
 const employeeList = []
-
-
 
 const questions = [
     {
@@ -161,20 +162,32 @@ function writePage(fileName, data) {
  function userQuestions() {
                    inquirer.prompt(questions)
                     .then((response) => {
-                   employeeList.push(response);
-                   console.log(employeeList)
+                        switch(response.role){
+                            case 'Manager':
+                            const manager=new Manager(response.firstName,response.lastName,response.idNumber,response.emailAddress,response.officeNumber)
+                            employeeList.push(manager)
+                            break;
+                            case 'Engineer':
+                                const engineer=new Engineer(response.firstName,response.lastName,response.idNumber,response.emailAddress,response.github)
+                                employeeList.push(engineer)
+                                break;
+                            case 'Intern':
+                                const intern=new Intern(response.firstName,response.lastName,response.idNumber,response.emailAddress,response.school)
+                                employeeList.push(intern)
+                                break;
+                            default:
+                                break;
+                        }
+
                    if (response.addMore === true) {
-                       console.log(response.addMore)
-                       return userQuestions(); 
+                   
+                       userQuestions(); 
                    } else {
-                       console.log(employeeList)
-                        const answers = codeTemplate.codeTemplate(response)
-                        //console.log(answers)
-                        console.log(`${response.firstName}`);
-                        console.log(`${response.idNumber}`)
-                        console.log(`${response.emailAddress}`)
-                        console.log(`${response.officeNumber}`)
-                        writePage(`${response.firstName}.html`, answers)
+                    
+                        const answers = codeTemplate(employeeList)
+                     
+                       
+                        writePage('team.html', answers)
                    };
                });
         };
@@ -186,17 +199,7 @@ userQuestions();
 
 
 
-    // .then((response) => {
-    //     const answers = codeTemplate.addEmployeeCards(response)
-    //     writePage(`ourteam.html`, answers)
-    // })
 
-
-    // userQuestions(questions)
-    // .then((response) => {
-    //     const answers = codeTemplate.addEmployeeCard(response);
-    //     writePage(`${response.Manager.firstNameInput}.html`, answers)
-    // });
 
 
 
